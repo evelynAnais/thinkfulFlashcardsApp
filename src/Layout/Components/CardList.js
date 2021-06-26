@@ -1,5 +1,5 @@
 import React from 'react';
-import CardList from './CardList';
+import Card from './Card';
 
 function CardList() {
   return(

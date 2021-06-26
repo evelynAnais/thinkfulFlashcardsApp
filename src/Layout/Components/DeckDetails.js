@@ -1,11 +1,13 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import CardList from './CardList';
 import Study from './Study';
 import Form from './Form';
 
 
 function DeckDetails() {
+  const { path } = useRouteMatch();
+
   return(
     <>
       <div>Breadcrumb</div>
@@ -13,22 +15,21 @@ function DeckDetails() {
         <Route path='/decks/new'>
           <Form />
         </Route>
-        <Route path='/decks/:deckId'>
+        <Route path={`${path}`}>
           <CardList />
         </Route>
-        <Route path='/decks/:deckId/study'>
+        <Route path={`${path}/study`}>
           <Study />
         </Route>
-        <Route path='/decks/:deckId/edit'>
+        <Route path={`${path}/edit`}>
           <Form />
         </Route>
-        <Route path='/decks/:deckId/cards/new'>
+        <Route path={`${path}/cards/new`}>
           <Form />
         </Route>
-        <Route path='/decks/:deckId/cards/:cardId/edit'>
+        <Route path={`${path}/cards/:cardId/edit`}>
           <Form />
         </Route>
-        
       </Switch>
     </>
   );

@@ -1,4 +1,5 @@
 import React from 'react';
+import CardList from './CardList';
 
 function CardList() {
   return(

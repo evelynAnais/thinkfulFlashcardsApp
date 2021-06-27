@@ -5,8 +5,8 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Deck from './Deck';
 
 function DeckList({ decks = [] }) {
-  const deckList = decks.map((deck, index) => (
-    <Deck key={index} deck={deck} />
+  const deckList = decks.map((deck) => (
+    <Deck key={deck.id} deck={deck} />
   ))
 
   return(

@@ -11,10 +11,13 @@ import { listDecks } from '../utils/api';
 function Layout() {
   const [decks, setDecks] = useState([]);
   useEffect(() => {
-    const allDecks = await listDecks();
-    console.log('alldecks ',allDecks)
+    async function getDecks() {
+      const allDecks = await listDecks();
+    console.log('allDecks', allDecks)
     setDecks(allDecks)
-  })
+    }
+    getDecks()
+  }, [])
   
   
   return (

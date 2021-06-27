@@ -4,7 +4,6 @@ import CardList from './CardList';
 import Study from './Study';
 import Form from './Form';
 
-
 function DeckDetails() {
   const { path } = useRouteMatch();
 

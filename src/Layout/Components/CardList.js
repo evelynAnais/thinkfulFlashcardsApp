@@ -1,10 +1,14 @@
 import React from 'react';
 import Card from './Card';
 
-function CardList() {
-  return(
+function CardList({ cards = [] }) {
+  const cardList = cards.map((card) => (
+    <Card key={card.id} card={card} />
+  ))
+  
+    return(
     <>
-    CardList
+    <div>{ cardList }</div>
     </>
   );
 }

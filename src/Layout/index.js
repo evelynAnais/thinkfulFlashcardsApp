@@ -13,11 +13,10 @@ function Layout() {
   useEffect(() => {
     async function getDecks() {
       const allDecks = await listDecks();
-    console.log('allDecks', allDecks)
-    setDecks(allDecks)
+      setDecks(allDecks);
     }
-    getDecks()
-  }, [])
+    getDecks();
+  }, []);
   
   
   return (

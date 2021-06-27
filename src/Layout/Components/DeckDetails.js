@@ -1,12 +1,24 @@
-import React from 'react';
+import { React, useEffect, useState } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import CardList from './CardList';
 import Study from './Study';
 import Form from './Form';
+import Deck from './Deck';
+import { readDeck } from '../../utils/api';
 
 function DeckDetails() {
-  const { path } = useRouteMatch();
+  const [deck, setDeck] = useState({});
+  const { params: {deckId}, url } = useRouteMatch();
 
+  useEffect (() => {
+    async function getDeck() {
+      const responseDeck = await readDeck(deckId);
+      setDeck(responseDeck);
+    }
+    getDeck();
+  }, [])
+
+console.log(deck, 'deck details')
   return(
     <>
       <div>Breadcrumb</div>
@@ -14,19 +26,20 @@ function DeckDetails() {
         <Route path='/decks/new'>
           <Form />
         </Route>
-        <Route path={`${path}`}>
-          <CardList />
+        <Route path={`${url}`}>
+          <Deck deck={deck} />
+          <CardList cards={deck.cards} />
         </Route>
-        <Route path={`${path}/study`}>
+        <Route path={`${url}/study`}>
           <Study />
         </Route>
-        <Route path={`${path}/edit`}>
+        <Route path={`${url}/edit`}>
           <Form />
         </Route>
-        <Route path={`${path}/cards/new`}>
+        <Route path={`${url}/cards/new`}>
           <Form />
         </Route>
-        <Route path={`${path}/cards/:cardId/edit`}>
+        <Route path={`${url}/cards/:cardId/edit`}>
           <Form />
         </Route>
       </Switch>

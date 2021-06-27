@@ -8,7 +8,7 @@ function CardList({ cards = [] }) {
   
     return(
     <>
-    <div>{ cardList }</div>
+      <div>{ cardList }</div>
     </>
   );
 }

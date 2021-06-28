@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import { Route, Switch, Link, useRouteMatch } from 'react-router-dom';
 import CardList from './CardList';
 import Study from './Study';
 import DeckForm from './DeckForm';
@@ -41,7 +41,13 @@ function DeckDetails() {
 
   return(
     <>
-      <div>Breadcrumb</div>
+      <nav>
+        <ol className='breadcrumb'>
+          <li className='breadcrumb-item'>
+            <Link to='/'>Home</Link></li>
+          <li className='breadcrumb-item active'>{deck.name}</li>
+        </ol>
+      </nav>
       <Switch>
         <Route exact path={`${path}`}>
           <Deck deck={deck} />
@@ -53,7 +59,7 @@ function DeckDetails() {
         </Route>
         <Route path={`${path}/edit`}>
           {/* deck edit */}
-          <DeckForm formProps={editDeckForm} deck={deck}/>
+          <DeckForm formProps={editDeckForm} />
         </Route>
         <Route path={`${path}/cards/new`}>
           {/* card new */}

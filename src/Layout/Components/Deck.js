@@ -5,7 +5,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 
 function Deck({ deck }) {
-  const { url } = useRouteMatch();
+  const { url, path } = useRouteMatch();
 
   return(
     <>
@@ -15,8 +15,15 @@ function Deck({ deck }) {
         : null 
       }
       <p>{deck.description}</p>
-      <Link to={`/decks/${deck.id}/edit`} className='btn btn-secondary'>Edit</Link>
+      
+      { url === '/'
+        ?<Link to={`/decks/${deck.id}`} className='btn btn-secondary'>View</Link>
+        :<Link to={`/decks/${deck.id}/edit`} className='btn btn-secondary'>Edit</Link>
+      }
       <Link to={`/decks/${deck.id}/study`} className='btn btn-primary'>Study</Link>
+      { path === '/decks/:deckId' 
+        && <Link to={`/decks/${deck.id}/cards/new`} className='btn btn-primary'>Add Card</Link> 
+      }
       <button className='btn btn-danger'><FontAwesomeIcon icon={faTrash}/></button>
     </>
   );

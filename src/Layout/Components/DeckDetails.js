@@ -8,7 +8,7 @@ import { readDeck } from '../../utils/api';
 
 function DeckDetails() {
   const [deck, setDeck] = useState({});
-  const { params: {deckId}, url } = useRouteMatch();
+  const { params: {deckId}, url, path } = useRouteMatch();
 
   useEffect (() => {
     async function getDeck() {
@@ -18,7 +18,8 @@ function DeckDetails() {
     getDeck();
   }, [])
 
-console.log(deck, 'deck details')
+console.log('url', url)
+console.log('path', path)
   return(
     <>
       <div>Breadcrumb</div>
@@ -26,21 +27,21 @@ console.log(deck, 'deck details')
         <Route path='/decks/new'>
           <Form />
         </Route>
-        <Route path={`${url}`}>
+        <Route exact path={`${path}`}>
           <Deck deck={deck} />
           <h2>Cards</h2>
           <CardList cards={deck.cards} />
         </Route>
-        <Route path={`${url}/study`}>
+        <Route path={`${path}/study`}>
           <Study />
         </Route>
-        <Route path={`${url}/edit`}>
+        <Route path={`${path}/edit`}>
           <Form />
         </Route>
-        <Route path={`${url}/cards/new`}>
+        <Route path={`${path}/cards/new`}>
           <Form />
         </Route>
-        <Route path={`${url}/cards/:cardId/edit`}>
+        <Route exact path={`${path}}/cards/:cardId/edit`}>
           <Form />
         </Route>
       </Switch>

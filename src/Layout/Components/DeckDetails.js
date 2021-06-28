@@ -28,6 +28,7 @@ console.log(deck, 'deck details')
         </Route>
         <Route path={`${url}`}>
           <Deck deck={deck} />
+          <h2>Cards</h2>
           <CardList cards={deck.cards} />
         </Route>
         <Route path={`${url}/study`}>

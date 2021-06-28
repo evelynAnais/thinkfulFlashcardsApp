@@ -5,11 +5,14 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 
 function Deck({ deck }) {
-  
+  const { url } = useRouteMatch();
+
   return(
     <>
     <h2>{deck.name}</h2>
-    <p>{deck.cards?.length} cards</p>
+    { url === '/' 
+    ? <p>{deck.cards?.length} cards</p>
+    : null}
     <p>{deck.description}</p>
     <Link to={`/decks/${deck.id}`} className='btn btn-secondary'>View</Link>
     <Link to={`/decks/${deck.id}/study`} className='btn btn-primary'>Study</Link>

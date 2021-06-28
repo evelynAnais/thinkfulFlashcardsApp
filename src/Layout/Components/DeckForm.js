@@ -6,15 +6,32 @@ import { createDeck, readDeck, updateDeck } from '../../utils/api';
 function DeckForm({formProps: { title, inputLabelOne, inputLabelTwo }}) {
   const { url, params: { deckId } } = useRouteMatch();
   const [deck, setDeck] = useState({});
+
   useEffect(() => {
+    const abortController = new AbortController();
+
     async function getDeck() {
-      const response = await readDeck(deckId);
-      setDeck(response);
+      try {
+        const response = await readDeck(deckId);
+        setDeck(response);
+      } catch (error) {
+        if (error.name === "AbortError") {
+          console.log("Aborted", deckId);
+        } else {
+          throw error;
+        }
+      }
     }
+
     if (url !== '/decks/new'){
       getDeck();
     }
-  }, [])
+
+    return () => {
+      console.log("cleanup", deckId);
+      abortController.abort();
+    };
+  }, [deckId, url])
   const initialFormState = {
     name: deck.name ? deck.name : "",
     description: deck.description ? deck.description : "",
@@ -46,12 +63,12 @@ function DeckForm({formProps: { title, inputLabelOne, inputLabelTwo }}) {
       <form onSubmit={submitHandler}>
         <label>{inputLabelOne}
           <input type='text' 
-          placeholder={deck.name ? deck.name : 'Deck Name'}
+          defaultValue={deck.name ? deck.name : 'Deck Name'}
           onChange={handleChange} />
         </label>
         <label>{inputLabelTwo}
           <textarea 
-          placeholder={deck.description ? deck.description : 'Brief description of the deck'}
+          defaultValue={deck.description ? deck.description : 'Brief description of the deck'}
           onChange={handleChange}></textarea>
         </label>
         <button className='btn btn-secondary'>CXD</button>

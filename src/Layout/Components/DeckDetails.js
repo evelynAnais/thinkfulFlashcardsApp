@@ -9,19 +9,30 @@ import { readDeck } from '../../utils/api';
 
 function DeckDetails() {
   const [deck, setDeck] = useState({});
-  const { params: {deckId}, url, path } = useRouteMatch();
+  const { params: {deckId}, path } = useRouteMatch();
 
   useEffect (() => {
+    const abortController = new AbortController();
+
     async function getDeck() {
-      const responseDeck = await readDeck(deckId);
-      setDeck(responseDeck);
+      try {
+        const responseDeck = await readDeck(deckId);
+        setDeck(responseDeck);
+      } catch (error) {
+        if (error.name === "AbortError") {
+          console.log("Aborted", deckId);
+        } else {
+          throw error;
+        }
+      }
     }
     getDeck();
-  }, [])
 
-  const editDeckSubmit = (event) => {
-    
-  }
+    return () => {
+      console.log("cleanup", deckId);
+      abortController.abort();
+    };
+  }, [deckId]);
   
   const editDeckForm = {
     title: 'Edit Deck',
@@ -61,13 +72,13 @@ function DeckDetails() {
           {/* deck edit */}
           <DeckForm formProps={editDeckForm} />
         </Route>
-        <Route path={`${path}/cards/new`}>
+        <Route exact path={`${path}/cards/new`}>
           {/* card new */}
-          <CardForm formProps={newCardForm}/>
+          <CardForm formProps={newCardForm} deck={deck}/>
         </Route>
-        <Route exact path={`${path}}/cards/:cardId/edit`}>
+        <Route path={`${path}/cards/:cardId/edit`}>
           {/* card edit */}
-          <CardForm formProps={editCardForm}/>
+          <CardForm formProps={editCardForm} deck={deck}/>
         </Route>
       </Switch>
     </>

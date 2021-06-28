@@ -5,6 +5,7 @@ import DeckList from './Components/DeckList';
 import NotFound from './NotFound';
 import Header from './Header';
 import { listDecks } from '../utils/api';
+import DeckForm from './Components/DeckForm';
 
 
 
@@ -18,6 +19,11 @@ function Layout() {
     getDecks();
   }, []);
   
+  const newDeckForm = {
+    title: 'Create Deck',
+    inputLabelOne: 'Name',
+    inputLabelTwo: 'Description',
+  }
   
   return (
     <>
@@ -27,6 +33,10 @@ function Layout() {
           <Route exact path='/'>
             <DeckList decks={decks} />
           </Route>
+        <Route exact path='/decks/new'>
+          <div>Breadcrumb</div>
+          <DeckForm formProps={newDeckForm}/>
+        </Route>
           <Route path='/decks/:deckId'>
             <DeckDetails />
           </Route>

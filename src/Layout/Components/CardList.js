@@ -4,9 +4,9 @@ import Card from './Card';
 function CardList({ cards = [] }) {
   const cardList = cards.map((card) => (
     <Card key={card.id} card={card} />
-  ))
+  ));
   
-    return(
+    return (
     <>
       <div>{ cardList }</div>
     </>

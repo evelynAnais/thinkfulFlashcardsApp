@@ -7,7 +7,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 function Deck({ deck }) {
   const { url, path } = useRouteMatch();
 
-  return(
+  return (
     <div className='container border border-secondary p-2 mt-2'>
       <h2>{deck.name}</h2>
       { url === '/' 

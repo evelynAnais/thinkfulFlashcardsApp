@@ -57,7 +57,7 @@ function DeckForm({formProps: { title, inputLabelOne, inputLabelTwo }}) {
       : updateDeck(formData);
   }
   
-  return(
+  return (
     <>
       <h2>{title}</h2>
       <form className='form-group' onSubmit={submitHandler}>

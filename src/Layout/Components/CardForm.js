@@ -56,7 +56,7 @@ function CardForm({formProps: { title, inputLabelOne, inputLabelTwo }, deck}) {
       : updateCard(formData);
   }
 
-  return(
+  return (
     <>
       <h3>
         <span>{deck.name}</span>: <span>{title}</span>

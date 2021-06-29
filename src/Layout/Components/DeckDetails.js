@@ -49,7 +49,7 @@ function DeckDetails() {
     inputLabelTwo: 'Back',
   };
 
-  return(
+  return (
     <>
       
       <Switch>

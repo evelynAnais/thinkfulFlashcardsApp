@@ -5,7 +5,7 @@ function StudyCard({ deck }) {
   const [card, setCard] = useState(deck.cards[0]);
   const [cardPosition, setCardPosition] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
-  
+
   const history = useHistory();
   
   const handleFlip = () => {
@@ -50,4 +50,4 @@ function StudyCard({ deck }) {
 }
 
 
-export default StudyCard
+export default StudyCard;

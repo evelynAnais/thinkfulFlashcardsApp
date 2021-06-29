@@ -7,9 +7,9 @@ import Deck from './Deck';
 function DeckList({ decks = [] }) {
   const deckList = decks.map((deck) => (
     <Deck key={deck.id} deck={deck} />
-  ))
+  ));
 
-  return(
+  return (
     <>
     <Link to='/decks/new' className='btn btn-secondary' >
       <FontAwesomeIcon icon={faPlus} /> Create Deck
@@ -19,4 +19,4 @@ function DeckList({ decks = [] }) {
   );
 }
 
-export default DeckList
+export default DeckList;

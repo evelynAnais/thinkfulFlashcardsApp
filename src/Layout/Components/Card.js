@@ -5,7 +5,8 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 function Card({ card }) {
   const { url } = useRouteMatch();
-  return(
+
+  return (
     <div className='container border border-secondary p-2 mt-2'>
       <p>{card.front}</p>
       <p>{card.back}</p>

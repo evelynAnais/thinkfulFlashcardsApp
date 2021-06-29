@@ -11,6 +11,7 @@ import DeckForm from './Components/DeckForm';
 
 function Layout() {
   const [decks, setDecks] = useState([]);
+  
   useEffect(() => {
     async function getDecks() {
       const allDecks = await listDecks();
@@ -23,7 +24,7 @@ function Layout() {
     title: 'Create Deck',
     inputLabelOne: 'Name',
     inputLabelTwo: 'Description',
-  }
+  };
   
   return (
     <>

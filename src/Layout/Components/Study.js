@@ -13,7 +13,7 @@ function Study() {
     });
   }, [deckId]);
 
-  return(
+  return (
     <>
       {deck && <StudyCard deck={deck} />}
     </>

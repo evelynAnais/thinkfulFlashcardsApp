@@ -9,8 +9,7 @@ import { readDeck } from '../../utils/api';
 
 function DeckDetails() {
   const [deck, setDeck] = useState({});
-
-  const { params: {deckId}, path } = useRouteMatch();
+  const { params: {deckId}, path, url } = useRouteMatch();
 
   useEffect (() => {
     const abortController = new AbortController();
@@ -30,7 +29,6 @@ function DeckDetails() {
     getDeck();
 
     return () => {
-      console.log("cleanup", deckId);
       abortController.abort();
     };
   }, [deckId]);
@@ -39,46 +37,96 @@ function DeckDetails() {
     title: 'Edit Deck',
     inputLabelOne: 'Name',
     inputLabelTwo: 'Description',
-  }
+  };
   const newCardForm = {
     title: 'Add Card',
     inputLabelOne: 'Front',
     inputLabelTwo: 'Back',
-  }
+  };
   const editCardForm = {
     title: 'Edit Card',
     inputLabelOne: 'Front',
     inputLabelTwo: 'Back',
-  }
+  };
 
   return(
     <>
-      <nav>
-        <ol className='breadcrumb'>
-          <li className='breadcrumb-item'>
-            <Link to='/'>Home</Link></li>
-          <li className='breadcrumb-item active'>{deck.name}</li>
-        </ol>
-      </nav>
+      
       <Switch>
         <Route exact path={`${path}`}>
+          <nav>
+            <ol className='breadcrumb'>
+              <li className='breadcrumb-item'>
+                <Link to='/'>Home</Link></li>
+              <li className='breadcrumb-item active'>{deck.name}</li>
+            </ol>
+          </nav>
           <Deck deck={deck} />
           <h2>Cards</h2>
           <CardList cards={deck.cards} />
         </Route>
         <Route path={`${path}/study`}>
+          <nav>
+            <ol className='breadcrumb'>
+              <li className='breadcrumb-item'>
+                <Link to='/'>Home</Link>
+              </li>
+              <li className='breadcrumb-item'>
+                <Link to={`${url}`}>{deck.name}</Link>
+              </li>
+              <li className='breadcrumb-item active'>
+                Study
+              </li>
+            </ol>
+          </nav>
           <Study />
         </Route>
         <Route path={`${path}/edit`}>
-          {/* deck edit */}
+          <nav>
+            <ol className='breadcrumb'>
+              <li className='breadcrumb-item'>
+                <Link to='/'>Home</Link>
+              </li>
+              <li className='breadcrumb-item'>
+                <Link to={`${url}`}>{deck.name}</Link>
+              </li>
+              <li className='breadcrumb-item active'>
+                Edit Deck
+              </li>
+            </ol>
+          </nav>
           <DeckForm formProps={editDeckForm} />
         </Route>
         <Route exact path={`${path}/cards/new`}>
-          {/* card new */}
+          <nav>
+            <ol className='breadcrumb'>
+              <li className='breadcrumb-item'>
+                <Link to='/'>Home</Link>
+              </li>
+              <li className='breadcrumb-item'>
+                <Link to={`${url}`}>{deck.name}</Link>
+              </li>
+              <li className='breadcrumb-item active'>
+                Add Card
+              </li>
+            </ol>
+          </nav>
           <CardForm formProps={newCardForm} deck={deck}/>
         </Route>
         <Route path={`${path}/cards/:cardId/edit`}>
-          {/* card edit */}
+          <nav>
+            <ol className='breadcrumb'>
+              <li className='breadcrumb-item'>
+                <Link to='/'>Home</Link>
+              </li>
+              <li className='breadcrumb-item'>
+                <Link to={`${url}`}>{deck.name}</Link>
+              </li>
+              <li className='breadcrumb-item active'>
+                Edit Card
+              </li>
+            </ol>
+          </nav>
           <CardForm formProps={editCardForm} deck={deck}/>
         </Route>
       </Switch>

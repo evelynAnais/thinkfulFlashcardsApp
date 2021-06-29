@@ -14,6 +14,10 @@ function DeckForm({formProps: { title, inputLabelOne, inputLabelTwo }}) {
       try {
         const response = await readDeck(deckId);
         setDeck(response);
+        setFormData({
+          name: response.name,
+          description: response.description
+        })
       } catch (error) {
         if (error.name === "AbortError") {
           console.log("Aborted", deckId);
@@ -23,58 +27,53 @@ function DeckForm({formProps: { title, inputLabelOne, inputLabelTwo }}) {
       }
     }
 
-    if (url !== '/decks/new'){
+    if (url !== '/decks/new') {
       getDeck();
     }
 
     return () => {
-      console.log("cleanup", deckId);
       abortController.abort();
     };
   }, [deckId, url])
+
   const initialFormState = {
     name: deck.name ? deck.name : "",
     description: deck.description ? deck.description : "",
   };
+
   const [formData, setFormData] = useState({ ...initialFormState });
+  
   const handleChange = ({ target }) => {
     setFormData({
       ...formData,
       [target.name]: target.value,
     });
   };
+  
   const submitHandler = (event, submitType) => {
     event.preventDefault();
-    console.log('submitted');
-    const formData = new FormData(event.form)
-    switch(submitType) {
-      case 'newDeck':
-        createDeck(formData);
-        break;
-      case 'editDeck':
-        updateDeck(formData);
-        break;
-    }    
+    submitType === 'formDeck'
+      ? createDeck(formData)
+      : updateDeck(formData);
   }
   
   return(
     <>
-      
       <h2>{title}</h2>
-      
       <form className='form-group' onSubmit={submitHandler}>
         <div>
           <label>{inputLabelOne}
-            <input className='form-control' type='text' 
-            defaultValue={deck.name ? deck.name : 'Deck Name'}
+            <input name='name' className='form-control' type='text' 
+            defaultValue={formData.name}
             onChange={handleChange} />
           </label>
         </div>
         <div>
           <label>{inputLabelTwo}
             <textarea 
+            name='description'
             className='form-control'
-            defaultValue={deck.description ? deck.description : 'Brief description of the deck'}
+            defaultValue={formData.description}
             onChange={handleChange}></textarea>
           </label>
         </div>
@@ -87,4 +86,4 @@ function DeckForm({formProps: { title, inputLabelOne, inputLabelTwo }}) {
   );
 }
 
-export default DeckForm
+export default DeckForm;

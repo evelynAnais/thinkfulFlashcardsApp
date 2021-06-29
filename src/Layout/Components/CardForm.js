@@ -14,6 +14,10 @@ function CardForm({formProps: { title, inputLabelOne, inputLabelTwo }, deck}) {
       try {
         const response = await readCard(cardId);
         setCard(response);
+        setFormData({
+          front: response.front,
+          back: response.back
+        })
       } catch (error) {
         if (error.name === "AbortError") {
           console.log("Aborted", cardId);
@@ -28,14 +32,13 @@ function CardForm({formProps: { title, inputLabelOne, inputLabelTwo }, deck}) {
     }
 
     return () => {
-      console.log("cleanup", cardId);
       abortController.abort();
     };
   }, [cardId, deck.id, url]);
 
   const initialFormState = {
     front: card.front ? card.front : "",
-    back: card.description ? card.description : "",
+    back: card.back ? card.back : "",
   };
 
   const [formData, setFormData] = useState({ ...initialFormState });
@@ -48,17 +51,11 @@ function CardForm({formProps: { title, inputLabelOne, inputLabelTwo }, deck}) {
 
   const submitHandler = (event, submitType) => {
     event.preventDefault();
-    console.log('submitted');
-    switch(submitType) {
-      case 'newCard':
-        createCard(formData);
-        break;
-      case 'editCard':
-        updateCard(formData);
-        break;
-    }    
+    submitType === 'newCard'
+      ? createCard(formData)
+      : updateCard(formData);
   }
-  
+
   return(
     <>
       <h3>
@@ -68,18 +65,20 @@ function CardForm({formProps: { title, inputLabelOne, inputLabelTwo }, deck}) {
         <div>
           <label>{inputLabelOne}
             <textarea 
+            name='front'
             className='form-control'
             onChange={handleChange}
-            defaultValue={ card.front ? card.front : 'Front side of card'}>
+            defaultValue={ formData.front }>
             </textarea>
           </label>
         </div>
         <div>
           <label>{inputLabelTwo}
             <textarea 
+            name='back'
             className='form-control'
             onChange={handleChange}
-            defaultValue={ card.back ? card.back : 'Back side of card'}>
+            defaultValue={ formData.back }>
             </textarea>
           </label>
         </div>
@@ -92,4 +91,4 @@ function CardForm({formProps: { title, inputLabelOne, inputLabelTwo }, deck}) {
   );
 }
 
-export default CardForm
+export default CardForm;

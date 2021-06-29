@@ -6,16 +6,13 @@ import { readDeck } from '../../utils/api';
 function Study() {
   const [deck, setDeck] = useState(null);
   const { params: {deckId} } = useRouteMatch();
-console.log('deckId',deckId)
+  
   useEffect (() => {
-    console.log('useEffect')
     readDeck(deckId).then(res => {
-      console.log('setting deck to', res);
       setDeck(res)
     });
-  }, []);
+  }, [deckId]);
 
- console.log(deck)
   return(
     <>
       {deck && <StudyCard deck={deck} />}

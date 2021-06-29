@@ -64,21 +64,29 @@ function CardForm({formProps: { title, inputLabelOne, inputLabelTwo }, deck}) {
       <h3>
         <span>{deck.name}</span>: <span>{title}</span>
       </h3>
-      <form onSubmit={submitHandler}>
-        <label>{inputLabelOne}
-          <textarea 
-          onChange={handleChange}
-          defaultValue={ card.front ? card.front : 'Front side of card'}>
-          </textarea>
-        </label>
-        <label>{inputLabelTwo}
-          <textarea 
-          onChange={handleChange}
-          defaultValue={ card.back ? card.back : 'Back side of card'}>
-          </textarea>
-        </label>
-        <button className='btn btn-secondary'>CXD</button>
-        <button className='btn btn-primary' type='submit'>Submit</button>
+      <form className='form-group' onSubmit={submitHandler}>
+        <div>
+          <label>{inputLabelOne}
+            <textarea 
+            className='form-control'
+            onChange={handleChange}
+            defaultValue={ card.front ? card.front : 'Front side of card'}>
+            </textarea>
+          </label>
+        </div>
+        <div>
+          <label>{inputLabelTwo}
+            <textarea 
+            className='form-control'
+            onChange={handleChange}
+            defaultValue={ card.back ? card.back : 'Back side of card'}>
+            </textarea>
+          </label>
+        </div>
+        <div>
+          <button className='btn btn-secondary'>CXD</button>
+          <button className='btn btn-primary' type='submit'>Submit</button>
+        </div>
       </form>
     </>
   );

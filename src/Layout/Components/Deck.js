@@ -8,7 +8,7 @@ function Deck({ deck }) {
   const { url, path } = useRouteMatch();
 
   return(
-    <>
+    <div className='container border border-secondary p-2 mt-2'>
       <h2>{deck.name}</h2>
       { url === '/' 
         ? <p>{deck.cards?.length} cards</p>
@@ -25,7 +25,7 @@ function Deck({ deck }) {
         && <Link to={`/decks/${deck.id}/cards/new`} className='btn btn-primary'>Add Card</Link> 
       }
       <button className='btn btn-danger'><FontAwesomeIcon icon={faTrash}/></button>
-    </>
+    </div>
   );
 }
 

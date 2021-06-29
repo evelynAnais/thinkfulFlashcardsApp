@@ -6,7 +6,7 @@ import { readDeck } from '../../utils/api';
 function Study() {
   const [deck, setDeck] = useState(null);
   const { params: {deckId} } = useRouteMatch();
-  
+
   useEffect (() => {
     readDeck(deckId).then(res => {
       setDeck(res)

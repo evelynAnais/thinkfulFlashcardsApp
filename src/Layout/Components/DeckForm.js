@@ -59,20 +59,29 @@ function DeckForm({formProps: { title, inputLabelOne, inputLabelTwo }}) {
   
   return(
     <>
+      
       <h2>{title}</h2>
-      <form onSubmit={submitHandler}>
-        <label>{inputLabelOne}
-          <input type='text' 
-          defaultValue={deck.name ? deck.name : 'Deck Name'}
-          onChange={handleChange} />
-        </label>
-        <label>{inputLabelTwo}
-          <textarea 
-          defaultValue={deck.description ? deck.description : 'Brief description of the deck'}
-          onChange={handleChange}></textarea>
-        </label>
-        <button className='btn btn-secondary'>CXD</button>
-        <button className='btn btn-primary' type='submit'>Submit</button>
+      
+      <form className='form-group' onSubmit={submitHandler}>
+        <div>
+          <label>{inputLabelOne}
+            <input className='form-control' type='text' 
+            defaultValue={deck.name ? deck.name : 'Deck Name'}
+            onChange={handleChange} />
+          </label>
+        </div>
+        <div>
+          <label>{inputLabelTwo}
+            <textarea 
+            className='form-control'
+            defaultValue={deck.description ? deck.description : 'Brief description of the deck'}
+            onChange={handleChange}></textarea>
+          </label>
+        </div>
+        <div>
+          <button className='btn btn-secondary'>CXD</button>
+          <button className='btn btn-primary' type='submit'>Submit</button>
+        </div>
       </form>
     </>
   );

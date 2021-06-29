@@ -29,7 +29,7 @@ function StudyCard({ deck }) {
   };
 
   return (
-    <>
+    <div className='container border border-secondary p-2 mt-2'>
     { deck && (deck.cards.length < 3) 
       ?
       <div>
@@ -45,7 +45,7 @@ function StudyCard({ deck }) {
         { isFlipped && <button className='btn btn-primary' onClick={handleNext}>Next</button>}
       </div>
     }
-    </>
+    </div>
   )
 }
 

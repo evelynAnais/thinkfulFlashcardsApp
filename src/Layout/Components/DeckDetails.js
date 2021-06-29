@@ -9,6 +9,7 @@ import { readDeck } from '../../utils/api';
 
 function DeckDetails() {
   const [deck, setDeck] = useState({});
+
   const { params: {deckId}, path } = useRouteMatch();
 
   useEffect (() => {

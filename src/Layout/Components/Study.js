@@ -1,43 +1,24 @@
-import { React, useEffect, useState } from 'react';
-import { useRouteMatch, Link } from 'react-router';
+import { React, useState, useEffect } from 'react';
+import { useRouteMatch } from 'react-router-dom';
+import StudyCard from './StudyCard';
 import { readDeck } from '../../utils/api';
 
 function Study() {
-  const [deck, setDeck] = useState();
-  const { params: { deckId }} = useRouteMatch();
-
+  const [deck, setDeck] = useState(null);
+  const { params: {deckId} } = useRouteMatch();
+console.log('deckId',deckId)
   useEffect (() => {
-    const abortController = new AbortController();
+    console.log('useEffect')
+    readDeck(deckId).then(res => {
+      console.log('setting deck to', res);
+      setDeck(res)
+    });
+  }, []);
 
-    async function getDeck() {
-      try {
-        const responseDeck = await readDeck(deckId);
-        setDeck(responseDeck);
-      } catch (error) {
-        if (error.name === "AbortError") {
-          console.log("Aborted", deckId);
-        } else {
-          throw error;
-        }
-      }
-    }
-    getDeck();
-
-    return () => {
-      console.log("cleanup", deckId);
-      abortController.abort();
-    };
-  }, [deckId]);
-
+ console.log(deck)
   return(
     <>
-    { deck.cards?.length < 3 && 
-      <>
-        <h4>Not enough cards.</h4>
-        <p>You need at least 3 cards to study. There are {deck.cards.length} cards in this deck</p>
-        <Link to={`/decks/${deck.id}/cards/new`} className='btn btn-primary'>Add Cards</Link>
-      </>
-    }
+      {deck && <StudyCard deck={deck} />}
     </>
   );
 }

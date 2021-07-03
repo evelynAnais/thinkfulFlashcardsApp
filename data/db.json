@@ -1,9 +1,9 @@
 {
   "decks": [
     {
-      "id": 1,
       "name": "Rendering in React",
-      "description": "React's component structure allows for quickly building a complex web application that relies on DOM manipulation. "
+      "description": "React's component structure allows for quickly building a complex web application that relies on DOM manipulation. ",
+      "id": 1
     },
     {
       "name": "React Router",
@@ -43,11 +43,75 @@
       "id": 5
     },
     {
-      "cards": [],
-      "front": "b",
-      "back": "b",
+      "front": "Differentiate between Real DOM and Virtual DOM.",
+      "back": "Virtual DOM updates are faster but do not directly update the HTML",
       "deckId": 1,
-      "id": 7
+      "id": 8
+    },
+    {
+      "front": "hello",
+      "back": "hikjjjlhhlh",
+      "id": 11
+    },
+    {
+      "front": "hello",
+      "back": "addjgklhjk",
+      "id": 12
+    },
+    {
+      "front": "hi",
+      "back": "bye",
+      "id": 13
+    },
+    {
+      "front": "hhhhhh",
+      "back": "fefefeefefefefefgggggggg",
+      "id": 14
+    },
+    {
+      "front": "fffffffffddd",
+      "back": "ssssfffff",
+      "id": 15
+    },
+    {
+      "front": "dddkl;j",
+      "back": "ssssjlh",
+      "id": 16
+    },
+    {
+      "front": "one",
+      "back": "onwwwwww",
+      "id": 17
+    },
+    {
+      "front": "one to delete",
+      "back": "delete me delete delets",
+      "id": 21
+    },
+    {
+      "front": "delete does not delete",
+      "back": "but edit does delete something",
+      "id": 23
+    },
+    {
+      "front": "hey",
+      "back": "deletefffffff",
+      "id": 24
+    },
+    {
+      "front": "Some card",
+      "back": "back of card",
+      "id": 25
+    },
+    {
+      "front": "another cool card",
+      "back": "some back of the card shit",
+      "id": 26
+    },
+    {
+      "front": "some card has new shit",
+      "back": "another test of this",
+      "id": 27
     }
   ]
 }

@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch, Link, useRouteMatch } from 'react-router-dom';
 import CardList from './CardList';
 import Study from './Study';
@@ -37,16 +37,19 @@ function DeckDetails() {
     title: 'Edit Deck',
     inputLabelOne: 'Name',
     inputLabelTwo: 'Description',
+    submitType: 'editDeck'
   };
   const newCardForm = {
     title: 'Add Card',
     inputLabelOne: 'Front',
     inputLabelTwo: 'Back',
+    submitType: 'newCard',
   };
   const editCardForm = {
     title: 'Edit Card',
     inputLabelOne: 'Front',
     inputLabelTwo: 'Back',
+    submitType: 'editCard'
   };
 
   return (
@@ -63,7 +66,7 @@ function DeckDetails() {
           </nav>
           <Deck deck={deck} />
           <h2>Cards</h2>
-          <CardList cards={deck.cards} />
+          <CardList deck={deck} />
         </Route>
         <Route path={`${path}/study`}>
           <nav>

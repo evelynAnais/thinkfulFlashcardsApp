@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react';
+import  React, { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import StudyCard from './StudyCard';
 import { readDeck } from '../../utils/api';

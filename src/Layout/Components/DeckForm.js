@@ -1,11 +1,12 @@
-import { React, useEffect, useState } from 'react';
-import { useRouteMatch } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useRouteMatch, useHistory } from 'react-router-dom';
 import { createDeck, readDeck, updateDeck } from '../../utils/api';
 
 
-function DeckForm({formProps: { title, inputLabelOne, inputLabelTwo }}) {
+function DeckForm({ formProps: { title, inputLabelOne, inputLabelTwo, submitType }}) {
   const { url, params: { deckId } } = useRouteMatch();
   const [deck, setDeck] = useState({});
+  const history = useHistory();
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -50,35 +51,55 @@ function DeckForm({formProps: { title, inputLabelOne, inputLabelTwo }}) {
     });
   };
   
-  const submitHandler = (event, submitType) => {
+  const submitHandler = (event) => {
     event.preventDefault();
-    submitType === 'formDeck'
-      ? createDeck(formData)
-      : updateDeck(formData);
+    if (submitType === 'editDeck') {
+      formData.id = deckId;
+    }
+    submitType === 'newDeck'
+      ? createDeck(formData).then(res => {
+        history.push(`/decks/${res.id}`)
+      })
+      : updateDeck(formData).then(res => {
+        history.push(`/decks/${res.id}`)
+      });
   }
   
+  const handleCancel = (e) => {
+    e.preventDefault();
+    history.goBack();
+  }
+
   return (
     <>
       <h2>{title}</h2>
       <form className='form-group' onSubmit={submitHandler}>
         <div>
           <label>{inputLabelOne}
-            <input name='name' className='form-control' type='text' 
-            defaultValue={formData.name}
-            onChange={handleChange} />
+            <input 
+              name='name' 
+              className='form-control' 
+              type='text' 
+              defaultValue={formData.name}
+              onChange={handleChange} 
+              placeholder='Deck Name'
+            />
           </label>
         </div>
         <div>
           <label>{inputLabelTwo}
             <textarea 
-            name='description'
-            className='form-control'
-            defaultValue={formData.description}
-            onChange={handleChange}></textarea>
+              name='description'
+              className='form-control'
+              defaultValue={formData.description}
+              onChange={handleChange}
+              placeholder='Brief description of the deck'
+              >
+            </textarea>
           </label>
         </div>
         <div>
-          <button className='btn btn-secondary'>CXD</button>
+          <button className='btn btn-secondary' onClick={handleCancel}>Cancel</button>
           <button className='btn btn-primary' type='submit'>Submit</button>
         </div>
       </form>

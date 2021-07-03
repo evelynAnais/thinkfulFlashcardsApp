@@ -8,6 +8,7 @@ import { deleteDeck } from '../../utils/api/index';
 function Deck({ deck }) {
   const { url, path } = useRouteMatch();
   const history = useHistory();
+  
   function deleteHandler(deckId) {
     const confirmed = window.confirm(
       "Delete this deck?\n\nYou will not be able to recover it."

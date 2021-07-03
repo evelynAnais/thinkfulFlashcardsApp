@@ -23,39 +23,8 @@ function CardForm({formProps: { title, inputLabelOne, inputLabelTwo, submitType 
     });
     }
   }
-  useEffect(getCard, [cardId])
-
-
-  // useEffect(() => {
-  //   const abortController = new AbortController();
-
-  //   async function getCard() {
-  //     try {
-  //       const response = await readCard(cardId);
-  //       setCard(response);
-  //       setFormData({
-  //         front: response.front,
-  //         back: response.back
-  //       })
-  //     } catch (error) {
-  //       if (error.name === "AbortError") {
-  //         console.log("Aborted", cardId);
-  //       } else {
-  //         throw error;
-  //       }
-  //     }
-  //   }
-
-  //   if (url !== `/decks/${deck.id}/cards/new`){
-  //     getCard();
-  //   }
-
-  //   return () => {
-  //     abortController.abort();
-  //   };
-  // }, [cardId, deck.id, url]);
-
   
+  useEffect(getCard, [cardId])
 
   const [formData, setFormData] = useState(initialFormState);
   const handleChange = ({ target }) => {

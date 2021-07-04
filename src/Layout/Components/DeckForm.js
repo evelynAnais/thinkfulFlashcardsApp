@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useRouteMatch, useHistory } from 'react-router-dom';
-import { createDeck, readDeck, updateDeck } from '../../utils/api';
+import React, { useEffect, useState } from "react";
+import { useRouteMatch, useHistory } from "react-router-dom";
+import { createDeck, readDeck, updateDeck } from "../../utils/api";
 
-
-function DeckForm({ formProps: { title, inputLabelOne, inputLabelTwo, submitType }}) {
-  const { url, params: { deckId } } = useRouteMatch();
+function DeckForm({
+  formProps: { title, inputLabelOne, inputLabelTwo, submitType },
+}) {
+  const {
+    url,
+    params: { deckId },
+  } = useRouteMatch();
   const [deck, setDeck] = useState({});
   const history = useHistory();
 
@@ -17,8 +21,8 @@ function DeckForm({ formProps: { title, inputLabelOne, inputLabelTwo, submitType
         setDeck(response);
         setFormData({
           name: response.name,
-          description: response.description
-        })
+          description: response.description,
+        });
       } catch (error) {
         if (error.name === "AbortError") {
           console.log("Aborted", deckId);
@@ -28,14 +32,14 @@ function DeckForm({ formProps: { title, inputLabelOne, inputLabelTwo, submitType
       }
     }
 
-    if (url !== '/decks/new') {
+    if (url !== "/decks/new") {
       getDeck();
     }
 
     return () => {
       abortController.abort();
     };
-  }, [deckId, url])
+  }, [deckId, url]);
 
   const initialFormState = {
     name: deck.name ? deck.name : "",
@@ -43,64 +47,69 @@ function DeckForm({ formProps: { title, inputLabelOne, inputLabelTwo, submitType
   };
 
   const [formData, setFormData] = useState({ ...initialFormState });
-  
+
   const handleChange = ({ target }) => {
     setFormData({
       ...formData,
       [target.name]: target.value,
     });
   };
-  
+
   const submitHandler = (event) => {
     event.preventDefault();
-    if (submitType === 'editDeck') {
+    if (submitType === "editDeck") {
       formData.id = deckId;
     }
-    submitType === 'newDeck'
-      ? createDeck(formData).then(res => {
-        history.push(`/decks/${res.id}`)
-      })
-      : updateDeck(formData).then(res => {
-        history.push(`/decks/${res.id}`)
-      });
-  }
-  
+    submitType === "newDeck"
+      ? createDeck(formData).then((res) => {
+          history.push(`/decks/${res.id}`);
+        })
+      : updateDeck(formData).then((res) => {
+          history.push(`/decks/${res.id}`);
+        });
+  };
+
   const handleCancel = (e) => {
     e.preventDefault();
     history.goBack();
-  }
+  };
 
   return (
     <>
       <h2>{title}</h2>
-      <form className='form-group' onSubmit={submitHandler}>
+      <form className="form-group" onSubmit={submitHandler}>
         <div>
-          <label>{inputLabelOne}
-            <input 
-              name='name' 
-              className='form-control' 
-              type='text' 
+          <label>
+            {inputLabelOne}
+            <input
+              name="name"
+              className="form-control"
+              type="text"
               defaultValue={formData.name}
-              onChange={handleChange} 
-              placeholder='Deck Name'
+              onChange={handleChange}
+              placeholder="Deck Name"
             />
           </label>
         </div>
         <div>
-          <label>{inputLabelTwo}
-            <textarea 
-              name='description'
-              className='form-control'
+          <label>
+            {inputLabelTwo}
+            <textarea
+              name="description"
+              className="form-control"
               defaultValue={formData.description}
               onChange={handleChange}
-              placeholder='Brief description of the deck'
-              >
-            </textarea>
+              placeholder="Brief description of the deck"
+            ></textarea>
           </label>
         </div>
         <div>
-          <button className='btn btn-secondary' onClick={handleCancel}>Cancel</button>
-          <button className='btn btn-primary' type='submit'>Submit</button>
+          <button className="btn btn-secondary" onClick={handleCancel}>
+            Cancel
+          </button>
+          <button className="btn btn-primary" type="submit">
+            Submit
+          </button>
         </div>
       </form>
     </>

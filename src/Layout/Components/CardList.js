@@ -1,23 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { listCards } from '../../utils/api';
-import Card from './Card';
+import React from "react";
+import Card from "./Card";
 
 function CardList({ deck }) {
-  const [cards, setCards] = useState([]);
+  const { cards = [] } = deck;
 
-  function getCards() {
-    listCards(deck.id).then(setCards);
-  }
+  const cardList = cards.map((card) => <Card key={card.id} card={card} />);
 
-  useEffect(getCards, [deck.id]);
-  
-  const cardList = cards.map((card) => (
-    <Card key={card.id} card={card} />
-  ));
-  
-    return (
+  return (
     <>
-      <div>{ cardList }</div>
+      <div>{cardList}</div>
     </>
   );
 }

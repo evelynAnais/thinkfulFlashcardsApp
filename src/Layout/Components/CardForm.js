@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { useRouteMatch, useHistory } from 'react-router-dom';
-import { createCard, readCard, updateCard } from '../../utils/api';
+import React, { useState, useEffect } from "react";
+import { useRouteMatch, useHistory } from "react-router-dom";
+import { createCard, readCard, updateCard } from "../../utils/api";
 
-
-function CardForm({formProps: { title, inputLabelOne, inputLabelTwo, submitType }, deck}) {
-  const { url, params: { cardId }} = useRouteMatch();
+function CardForm({
+  formProps: { title, inputLabelOne, inputLabelTwo, submitType },
+  deck,
+}) {
+  const {
+    url,
+    params: { cardId },
+  } = useRouteMatch();
   const [card, setCard] = useState({});
   const history = useHistory();
   const initialFormState = {
@@ -13,18 +18,15 @@ function CardForm({formProps: { title, inputLabelOne, inputLabelTwo, submitType 
   };
 
   function getCard() {
-    console.log('cardId', cardId);
-    console.log('getCard');
     if (cardId) {
-      readCard(cardId).then(res => {
-        console.log('card call res', res)
+      readCard(cardId).then((res) => {
         setCard(res);
-        setFormData({front: res.front, back: res.back});
-    });
+        setFormData({ front: res.front, back: res.back });
+      });
     }
   }
-  
-  useEffect(getCard, [cardId])
+
+  useEffect(getCard, [cardId]);
 
   const [formData, setFormData] = useState(initialFormState);
   const handleChange = ({ target }) => {
@@ -36,52 +38,58 @@ function CardForm({formProps: { title, inputLabelOne, inputLabelTwo, submitType 
 
   const submitHandler = (event) => {
     event.preventDefault();
-    if (submitType === 'editCard') {
+    if (submitType === "editCard") {
       formData.id = cardId;
     }
-    submitType === 'newCard'
-      ? createCard(deck.id, formData).then(() => history.push(`/decks/${deck.id}`))
+    submitType === "newCard"
+      ? createCard(deck.id, formData).then(() =>
+          history.push(`/decks/${deck.id}`)
+        )
       : updateCard(formData).then(() => history.push(`/decks/${deck.id}`));
-  }
+  };
 
   const handleCancel = (e) => {
     e.preventDefault();
     history.goBack();
-  }
-  console.log('current formData', formData);
+  };
+
   return (
     <>
       <h3>
         <span>{deck.name}</span>: <span>{title}</span>
       </h3>
-      <form className='form-group' onSubmit={submitHandler}>
+      <form className="form-group" onSubmit={submitHandler}>
         <div>
-          <label>{inputLabelOne}
-            <textarea 
-              name='front'
-              className='form-control'
+          <label>
+            {inputLabelOne}
+            <textarea
+              name="front"
+              className="form-control"
               onChange={handleChange}
-              defaultValue={ formData.front }
-              placeholder='Front Side of card'
-              >
-            </textarea>
+              defaultValue={formData.front}
+              placeholder="Front Side of card"
+            ></textarea>
           </label>
         </div>
         <div>
-          <label>{inputLabelTwo}
-            <textarea 
-              name='back'
-              className='form-control'
+          <label>
+            {inputLabelTwo}
+            <textarea
+              name="back"
+              className="form-control"
               onChange={handleChange}
-              defaultValue={ formData.back }
-              placeholder='Back side of card'
-            >
-            </textarea>
+              defaultValue={formData.back}
+              placeholder="Back side of card"
+            ></textarea>
           </label>
         </div>
         <div>
-          <button className='btn btn-secondary' onClick={handleCancel}>Cancel</button>
-          <button className='btn btn-primary' type='submit'>Submit</button>
+          <button className="btn btn-secondary" onClick={handleCancel}>
+            Cancel
+          </button>
+          <button className="btn btn-primary" type="submit">
+            Submit
+          </button>
         </div>
       </form>
     </>
